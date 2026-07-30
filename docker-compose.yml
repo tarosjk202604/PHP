@@ -1,0 +1,53 @@
+services:
+  web:
+    build: ./php
+    ports:
+      - "8080:80"
+      - "8443:443" # HTTPS接続用 (<https://localhost:8443>) 
+    volumes:
+      - ./src:/var/www/html
+      # 証明書ファイルをコンテナ内のApacheの設定場所に同期（マウント）させる
+      - ./ssl/server.crt:/etc/ssl/certs/server.crt
+      - ./ssl/server.key:/etc/ssl/private/server.key
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.11
+    container_name: mariadb_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      # MYSQL_DATABASE: my_database
+      # MYSQL_USER: db_user
+      # MYSQL_PASSWORD: db_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # phpMyAdmin の設定
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_container
+    restart: always
+    ports:
+      - "8000:80" # ブラウザから http://localhost:8000 でアクセスできるようにします
+    environment:
+      PMA_HOST: db # 接続先データベース（上の db サービスを指定）
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword # db サービスで設定した root パスワード
+    depends_on:
+      - db
+
+  # Mailpit (疑似メールサーバー) 
+  mail:
+    image: axllent/mailpit:latest
+    container_name: mailpit_container
+    restart: always
+    ports:
+      - "8025:8025" # ブラウザでメール確認画面を見るためのポート
+      - "1025:1025" # PHP等からSMTPで送信するためのポート
+
+volumes:
+  db_data:
