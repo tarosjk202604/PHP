@@ -48,7 +48,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     // 入力値の再反映
     $toppings = $_POST['toppings'];
   }
-}
+
+  // エラー最終チェック
+  // var_dump(array_filter($errors));
+
+  if (!array_filter($errors)) {
+    // エラーなしの場合、index.phpにリダイレクト
+    header('location: index.php');
+    exit;
+  }
+} //if
 ?>
 <?php require './header.php'; ?>
 
@@ -62,19 +71,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         <!-- シェフの名前 -->
         <div class="mb-3">
           <label for="chef-name" class="form-label">シェフの名前</label>
-          <input type="text" class="form-control" id="chef-name" name="chef-name" value="<?= $chef_name; ?>">
+          <input type="text" class="form-control" id="chef-name" name="chef-name" value="<?= htmlspecialchars($chef_name); ?>">
           <p class="form-text text-danger"><?= $errors['chef-name']; ?></p>
         </div>
         <!-- ピザの名前 -->
         <div class="mb-3">
           <label for="pizza-name" class="form-label">ピザの名前</label>
-          <input type="text" class="form-control" id="pizza-name" name="pizza-name">
+          <input type="text" class="form-control" id="pizza-name" name="pizza-name" value="<?= htmlspecialchars($pizza_name); ?>">
           <p class="form-text text-danger"><?= $errors['pizza-name']; ?></p>
         </div>
         <!-- トッピング -->
         <div class="mb-3">
           <label for="toppings" class="form-label">トッピング</label>
-          <input type="text" class="form-control" id="toppings" name="toppings">
+          <input type="text" class="form-control" id="toppings" name="toppings" value="<?= htmlspecialchars($toppings); ?>">
           <p class="form-text text-danger"><?= $errors['toppings']; ?></p>
         </div>
         <!-- ピザの画像 -->
