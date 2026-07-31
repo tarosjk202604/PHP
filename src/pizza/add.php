@@ -1,10 +1,15 @@
 <?php
+
+// データベース接続
+require './dbconnect.php';
+
 // エラーメッセージ用変数
 // $error = '';
 $errors = [
-  'chef-name' => '',
-  'pizza-name' => '',
-  'toppings' => '',
+  'chef-name'   => '',
+  'pizza-name'  => '',
+  'toppings'    => '',
+  'pizza-img'   => '',
 ];
 
 // 入力値の再反映用変数
@@ -49,13 +54,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $toppings = $_POST['toppings'];
   }
 
+  // 画像ファイルのチェック
+  // var_dump($_FILES['pizza-img']);
+  if (
+    $_FILES['pizza-img']['tmp_name'] !== '' && //アップロードの確認
+    $_FILES['pizza-img']['error'] === 0 && //エラーなし
+    !array_filter($errors) //入力系にエラーがなかった場合
+  ) {
+    // echo 'アップロードがありました';
+
+    // 画像かどうかのチェック type を確認する
+    // 用意した配列の中にアップロードした画像の type があるかチェック
+    $ok_types = ['image/jpeg', 'image/png', 'image/webp'];
+
+    if (in_array($_FILES['pizza-img']['type'], $ok_types)) {
+      // ファイル名の作成
+      $upload_img_name = $_FILES['pizza-img']['name'];
+
+      // ファイル移動
+      $upload_success = move_uploaded_file($_FILES['pizza-img']['tmp_name'], 'uploads/' . $upload_img_name);
+
+      if (!$upload_success) {
+        $errors['pizza-img'] = '画像のアップロードに失敗しました';
+      }
+    } else {
+      $errors['pizza-img'] = '画像は JPEG, PNG, WEBP のいずれかの形式を選んでください。';
+    }
+  }
+
   // エラー最終チェック
   // var_dump(array_filter($errors));
-
   if (!array_filter($errors)) {
-    // エラーなしの場合、index.phpにリダイレクト
-    header('location: index.php');
-    exit;
+    // 画像のアップロードチェック
+    $is_image_uploaded = $_FILES['pizza-img']['tmp_name'];
+
+    // データベースへの登録
+    if ($is_image_uploaded) {
+      $stmt = $db->prepare('INSERT INTO pizzas (chef_name, pizza_name, toppings, image) VALUES(?,?,?,?)');
+    } else {
+      $stmt = $db->prepare('INSERT INTO pizzas (chef_name, pizza_name, toppings) VALUES(?,?,?)');
+    }
+    $stmt->bindValue(1, $_POST['chef-name']);
+    $stmt->bindValue(2, $_POST['pizza-name']);
+    $stmt->bindValue(3, $_POST['toppings']);
+    if ($is_image_uploaded) {
+      $stmt->bindValue(4, $_FILES['pizza-img']['name']);
+    }
+
+    $result = $stmt->execute();
+
+    if ($result) {
+      // エラーなしの場合、index.phpにリダイレクト
+      header('location: index.php');
+      exit;
+    }
   }
 } //if
 ?>
@@ -90,6 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         <div class="mb-3">
           <label for="pizza-img" class="form-label">ピザの画像</label>
           <input type="file" class="form-control" id="pizza-img" name="pizza-img">
+          <p class="form-text text-danger"><?= $errors['pizza-img']; ?></p>
         </div>
 
         <!-- 送信ボタン -->
