@@ -47,7 +47,7 @@ if (isset($db)) {
             <div class="card-body">
               <h3 class="h4 card-title"><?= $pizza['pizza_name']; ?></h3>
               <p class="card-text"><?= $pizza['toppings']; ?></p>
-              <a href="#" class="btn btn-primary">詳細</a>
+              <a href="detail.php?id=<?= $pizza['id']; ?>" class="btn btn-primary">詳細</a>
             </div>
           </div>
 
