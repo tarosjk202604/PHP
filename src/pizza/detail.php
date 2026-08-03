@@ -59,7 +59,14 @@ if (isset($db)) {
             <p class="card-text">登録日: <?= $pizza['created_at']; ?></p>
           </div>
           <div class="card-footer text-end">
-            <button class="btn btn-danger">削除</button>
+            <form action="detail.php?id=<?= $pizza['id']; ?>" method="post" id="delete-form">
+              <button class="btn btn-danger">削除</button>
+              <input type="hidden" name="delete-id" value="<?= $pizza['id']; ?>">
+            </form>
+            <script>
+              const deleteForm = document.querySelector('#delete-form');
+              deleteForm.addEventListener('submit', (e) => {});
+            </script>
           </div>
         </div>
       </div>
