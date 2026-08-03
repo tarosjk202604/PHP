@@ -32,10 +32,6 @@ if (isset($db)) {
 ?>
 <?php require './header.php'; ?>
 
-<?php
-var_dump($pizza);
-?>
-
 <div class="container">
 
   <h1 class="text-center h3">Pizza Detail</h1>
@@ -59,7 +55,11 @@ var_dump($pizza);
           <div class="card-body">
             <h3 class="h4 card-title"><?= $pizza['pizza_name']; ?></h3>
             <p class="card-text"><?= $pizza['toppings']; ?></p>
-            <a href="detail.php?id=<?= $pizza['id']; ?>" class="btn btn-primary">詳細</a>
+            <p class="card-text">シェフ: <?= $pizza['chef_name']; ?></p>
+            <p class="card-text">登録日: <?= $pizza['created_at']; ?></p>
+          </div>
+          <div class="card-footer text-end">
+            <button class="btn btn-danger">削除</button>
           </div>
         </div>
       </div>
