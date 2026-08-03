@@ -65,7 +65,13 @@ if (isset($db)) {
             </form>
             <script>
               const deleteForm = document.querySelector('#delete-form');
-              deleteForm.addEventListener('submit', (e) => {});
+              deleteForm.addEventListener('submit', (e) => {
+                e.preventDefault(); //送信を阻止する
+                const isDelete = confirm('このピザを削除しますが、本当にいいですか？');
+                if (isDelete) {
+                  e.target.submit(); //フォームの送信
+                }
+              });
             </script>
           </div>
         </div>
