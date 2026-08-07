@@ -50,60 +50,37 @@
   </div>
 </section>
 
+<?php if (have_posts()): ?>
+  <section class="section">
+    <div class="section_inner">
+      <header class="section_header">
+        <h2 class="heading heading-primary"><span>最新情報</span>NEWS</h2>
+        <div class="section_headerBtn"><a href="" class="btn btn-more">もっと見る</a></div>
+      </header>
+      <div class="section_body">
 
-<section class="section">
-  <div class="section_inner">
-    <header class="section_header">
-      <h2 class="heading heading-primary"><span>最新情報</span>NEWS</h2>
-      <div class="section_headerBtn"><a href="" class="btn btn-more">もっと見る</a></div>
-    </header>
-    <div class="section_body">
-      <div class="cardList cardList-1row">
+        <div class="cardList cardList-1row">
 
-        <section class="cardList_item">
-          <a href="#" class="card">
-            <div class="card_label"><span class="label label-black">お知らせ</span></div>
-            <div class="card_pic">
-              <img src="<?= get_template_directory_uri(); ?>/assets/img/home/news_img01@2x.png" alt="">
-            </div>
-            <div class="card_body">
-              <h2 class="card_title">タイトルが入ります。タイトルが入ります。タイトルが入ります。タイトルが入ります。</h2>
-              <time datetime="2022-01-25">2022年01月25日更新</time>
-            </div>
-          </a>
-        </section>
+          <?php while (have_posts()): the_post(); ?>
+            <section id="<?php the_ID(); ?>" class="cardList_item">
+              <a href="#" class="card">
+                <div class="card_label"><span class="label label-black">お知らせ</span></div>
+                <div class="card_pic">
+                  <img src="<?= get_template_directory_uri(); ?>/assets/img/home/news_img01@2x.png" alt="">
+                </div>
+                <div class="card_body">
+                  <h2 class="card_title">タイトルが入ります。タイトルが入ります。タイトルが入ります。タイトルが入ります。</h2>
+                  <time datetime="2022-01-25">2022年01月25日更新</time>
+                </div>
+              </a>
+            </section>
+          <?php endwhile; ?>
 
-        <section class="cardList_item">
-          <a href="#" class="card">
-            <div class="card_label"><span class="label label-black">お知らせ</span></div>
-            <div class="card_pic">
-              <img src="<?= get_template_directory_uri(); ?>/assets/img/home/news_img02@2x.png" alt="">
-            </div>
-            <div class="card_body">
-              <h2 class="card_title">タイトルが入ります。タイトルが入ります。</h2>
-              <time datetime="2022-01-25">2022年01月25日更新</time>
-            </div>
-          </a>
-        </section>
-
-        <section class="cardList_item">
-          <a href="#" class="card">
-            <div class="card_label"><span class="label label-black">お知らせ</span></div>
-            <div class="card_pic">
-              <img src="<?= get_template_directory_uri(); ?>/assets/img/home/news_img03@2x.png" alt="">
-            </div>
-            <div class="card_body">
-              <h2 class="card_title">タイトルが入ります。タイトルが入ります。タイトルが入ります。タイトルが入ります。</h2>
-              <time datetime="2022-01-25">2022年01月25日更新</time>
-            </div>
-          </a>
-        </section>
-
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
+  </section>
+<?php endif; ?>
 
 <section class="section section-info">
   <div class="section_inner">
