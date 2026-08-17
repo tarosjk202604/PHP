@@ -23,6 +23,9 @@
     <div class="header_nav">
       <div class="header_menu js-menu-icon"><span></span></div>
       <div class="gnav js-menu">
+        <?php
+        wp_nav_menu();
+        ?>
         <ul>
           <li><a href="concept.html">コンセプト</a></li>
           <li><a href="food.html">メニュー</a></li>
