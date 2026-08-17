@@ -67,7 +67,7 @@
 
                 <?php
                 $catgories = get_the_category();
-                // my_dump($catgories);
+                my_dump($catgories);
                 if ($catgories):
                 ?>
                   <div class="card_label">
