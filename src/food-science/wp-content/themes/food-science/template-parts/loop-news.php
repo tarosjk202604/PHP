@@ -3,7 +3,6 @@
 
     <?php
     $catgories = get_the_category();
-    minilog($catgories, 'test');
     if ($catgories):
     ?>
       <div class="card_label">
