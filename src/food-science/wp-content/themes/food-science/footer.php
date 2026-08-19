@@ -10,16 +10,14 @@
     </div>
     <section class="footer_sns">
       <h3>SHARE ON</h3>
-      <ul>
-        <?php
-        $args = [
-          'menu' => 'footer-sns', // 管理画面のメニュー名
-          'menu_class' => '', // ulからクラスが削除される
-          'container' => false, // ulを囲んでいるdivを削除
-        ];
-        wp_nav_menu($args);
-        ?>
-      </ul>
+      <?php
+      $args = [
+        'menu' => 'footer-sns', // 管理画面のメニュー名
+        'menu_class' => '', // ulからクラスが削除される
+        'container' => false, // ulを囲んでいるdivを削除
+      ];
+      wp_nav_menu($args);
+      ?>
     </section>
     <div class="footer_copyright">
       <small>&copy; FOOD SCIENCE All rights reserved.</small>
