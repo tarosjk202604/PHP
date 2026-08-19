@@ -44,8 +44,6 @@
           <div class="cardList">
             <?php while (have_posts()): the_post(); ?>
 
-              <?php minilog($post); ?>
-
               <?php get_template_part('template-parts/loop', 'news'); ?>
 
             <?php endwhile; ?>

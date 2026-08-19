@@ -24,14 +24,13 @@
       <div class="header_menu js-menu-icon"><span></span></div>
       <div class="gnav js-menu">
         <?php
-        wp_nav_menu();
+        $args = [
+          'menu' => 'global-navigation', // 管理画面のメニュー名
+          'menu_class' => '', // ulからクラスが削除される
+          'container' => false, // ulを囲んでいるdivを削除
+        ];
+        wp_nav_menu($args);
         ?>
-        <ul>
-          <li><a href="concept.html">コンセプト</a></li>
-          <li><a href="food.html">メニュー</a></li>
-          <li><a href="access.html">アクセス</a></li>
-          <li><a href="category.html">最新情報</a></li>
-        </ul>
 
         <div class="header_info">
           <form class="header_search">
