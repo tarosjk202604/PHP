@@ -32,3 +32,13 @@ function my_dump(mixed $data): void
   var_dump($data);
   echo '</pre>';
 }
+
+
+/**
+ * Contact Form 7の時は整形機能をOFFにする
+ */
+add_filter('wpcf7_autop_or_not', 'my_wpcf7_autop');
+function my_wpcf7_autop()
+{
+  return false;
+}
