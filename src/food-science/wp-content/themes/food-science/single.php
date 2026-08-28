@@ -73,6 +73,7 @@
       $args = [
         'post_type' => 'post',
         'posts_per_page' => 3,
+        'post__not_in' => [get_the_ID()],
       ];
       $latest_query = new WP_Query($args);
       ?>

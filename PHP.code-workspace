@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "src/food-science"
+		},
+		{
+			"path": "src/wp-exam"
 		}
 	],
 	"settings": {}
