@@ -10,5 +10,7 @@
 			"path": "src/wp-exam"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"favourite.resources": []
+	}
 }

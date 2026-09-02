@@ -7,69 +7,57 @@
         <h2 class="heading heading-primary"><span>フード紹介</span>FOOD</h2>
       </div>
 
-      <section class="section_body">
-        <h3 class="heading heading-secondary">お食事<span>MEAL</span></h3>
-        <ul class="foodList">
-
-          <?php if (have_posts()): ?>
-            <?php while (have_posts()): the_post(); ?>
-              <li class="foodList_item">
-
-                <?php get_template_part('template-parts/loop', 'food'); ?>
-
-              </li>
-            <?php endwhile; ?>
-          <?php endif; ?>
-
-        </ul>
-      </section>
-
-      <section class="section_body">
-        <h3 class="heading heading-secondary">ドリンク<span>DRINK</span></h3>
-        <ul class="foodList">
-          <li class="foodList_item">
-            <div class="foodCard">
-              <a href="#">
-                <div class="foodCard_pic">
-                  <img src="assets/img/food/drink_img01@2x.png" alt="">
-                </div>
-                <div class="foodCard_body">
-                  <h4 class="foodCard_title">ビール</h4>
-                  <p class="foodCard_price">¥700</p>
-                </div>
+      <?php
+      $args = [
+        'taxonomy' => 'menu',
+      ];
+      $menu_terms = get_terms($args);
+      minilog($menu_terms, 'メニューカテゴリのオブジェクト');
+      ?>
+      <?php if (!empty($menu_terms)): ?>
+        <?php foreach ($menu_terms as $menu): ?>
+          <section class="section_body">
+            <h3 class="heading heading-secondary">
+              <a href="<?= get_term_link($menu); ?>">
+                <?= $menu->name; ?>
+                <span><?= strtoupper($menu->slug); ?></span>
               </a>
-            </div>
-          </li>
+            </h3>
+            <ul class="foodList">
+              <?php
+              // 現在ループしているメニューカテゴリのデータのみ取得する
+              $args = [
+                'post_type' => 'food',  // 投稿タイプ: food
+                'posts_per_page' => -1, // 1ページに表示する投稿数(-1は全件)
+                'tax_query' => [        // タクソノミーの条件(配列で指定)
+                  'relation' => 'AND',  // 条件を繋ぐ接続詞(ANDかORを指定。条件が複数ある場合に有効)
 
-          <li class="foodList_item">
-            <div class="foodCard">
-              <a href="#">
-                <div class="foodCard_pic">
-                  <img src="assets/img/food/drink_img02@2x.png" alt="">
-                </div>
-                <div class="foodCard_body">
-                  <h4 class="foodCard_title">アイスコーヒー</h4>
-                  <p class="foodCard_price">¥600</p>
-                </div>
-              </a>
-            </div>
-          </li>
+                  // 条件1
+                  [
+                    'taxonomy' => 'menu', // タクソノミー名
+                    'field' => 'slug',    // 検索するフィールドの種類(ID、名前、スラッグなど)
+                    'terms' => $menu->slug, // 実際のスラッグ名
+                  ]
+                ],
+              ];
+              $the_query = new WP_Query($args);
+              ?>
+              <?php if ($the_query->have_posts()): ?>
+                <?php while ($the_query->have_posts()): $the_query->the_post(); ?>
+                  <li class="foodList_item">
 
-          <li class="foodList_item">
-            <div class="foodCard">
-              <a href="#">
-                <div class="foodCard_pic">
-                  <img src="assets/img/food/drink_img03@2x.png" alt="">
-                </div>
-                <div class="foodCard_body">
-                  <h4 class="foodCard_title">コーヒー</h4>
-                  <p class="foodCard_price">¥500</p>
-                </div>
-              </a>
-            </div>
-          </li>
-        </ul>
-      </section>
+                    <?php get_template_part('template-parts/loop', 'food'); ?>
+
+                  </li>
+                <?php endwhile; ?>
+                <?php wp_reset_postdata(); ?>
+              <?php endif; ?>
+
+            </ul>
+          </section>
+        <?php endforeach; ?>
+      <?php endif; ?>
+
     </div>
   </section>
 </main>
