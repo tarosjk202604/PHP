@@ -11,6 +11,22 @@
 		}
 	],
 	"settings": {
-		"favourite.resources": []
+		"favourite.resources": [],
+		"liveSassCompile.settings.formats": [
+			{
+				"format": "expanded",
+				"extensionName": ".css",
+				"savePath": "~/../assets/css",
+				"savePathReplacementPairs": null
+			}
+		],
+		"liveSassCompile.settings.excludeList": [
+			"/**/node_modules/**",
+			"/.vscode/**",
+			"/**/wp-admin/**",
+			"/**/wp-includes/**",
+			"/**/plugins/**",
+			"/src/**", // メインのPHPフォルダ用
+		]
 	}
 }

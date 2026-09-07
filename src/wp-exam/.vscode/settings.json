@@ -1,0 +1,9 @@
+{
+  // "liveSassCompile.settings.excludeList": [
+  //   "/**/node_modules/**",
+  //   "/.vscode/**",
+  //   "/wp-content/**",
+  //   "/wp-admin/**",
+  //   "/wp-includes/**"
+  // ]
+}
